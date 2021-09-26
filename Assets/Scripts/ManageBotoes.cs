@@ -5,8 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class ManageBotoes : MonoBehaviour
 {
-    public int comecoTimer;
-    public bool comecar;
+    public int changeDelay = 60;
+    // 1 = StartGame
+    // 2 = MostrarCreditos
+    // 3 = FecharJogo
+    public int botao = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,19 +22,49 @@ public class ManageBotoes : MonoBehaviour
         /// <summary>
         /// Esperar um tempo antes de começar o jogo, e assim carrega a proxima cena
         /// </summary>
-        if (comecar)
+        if (botao > 0)
         {
-            comecoTimer--;
-            if (comecoTimer <= 0)
+            switch (botao)
             {
-                SceneManager.LoadScene("Game");
+                case 1:
+                    changeDelay--;
+                    if (changeDelay <= 0)
+                    {
+                        SceneManager.LoadScene("Game");
+                    }
+                    break;
+                case 2:
+                    changeDelay--;
+                    if (changeDelay <= 0)
+                    {
+                        SceneManager.LoadScene("Creditos");
+                    }
+                    break;
+                case 3:
+                    Application.Quit();
+                    botao = 0;
+                    Debug.Log("Game is exiting");
+                    break;
             }
+            
         }
 
     }
 
     public void StartGame()
     {
-        comecar = true;
+        botao = 1;
+    }
+
+    public void MostrarCreditos()
+    {
+        botao = 2;
+        changeDelay = 15;
+    }
+    
+    public void FecharJogo()
+    {
+        botao = 3;
+        changeDelay = 15;
     }
 }
