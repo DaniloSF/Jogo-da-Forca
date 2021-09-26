@@ -20,6 +20,8 @@ public class GameManager : MonoBehaviour
     char[] letrasOcultas;
     bool[] letrasDescobertas;
 
+    bool[] letrasTestadas;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,7 +33,7 @@ public class GameManager : MonoBehaviour
 
         numTentativas = 0;
         maxNumTentativas = 10;
-        UpdateNumTentativas();
+        UpdateTentativas("");
         UpdateScore();
     }
 
@@ -67,6 +69,12 @@ public class GameManager : MonoBehaviour
         letrasOcultas = new char[tamanhoPalavraOculta];
         letrasDescobertas = new bool[tamanhoPalavraOculta];
         letrasOcultas = palavraOculta.ToCharArray();
+
+        letrasTestadas = new bool[26];
+        for(int i=0; i<26; i++)
+        {
+            letrasTestadas[i] = false;
+        }
     }
 
     void CheckTeclado()
@@ -79,49 +87,54 @@ public class GameManager : MonoBehaviour
             char letraTeclada = inputPalavra[0];
             int letraTecladoComoInt = System.Convert.ToInt32(letraTeclada);
 
-            if(numTentativas >= maxNumTentativas)
-            {
-                SceneManager.LoadScene("GameOver");
-            }
-
             if(letraTecladoComoInt >= 97 && letraTecladoComoInt <= 122)
             {
-                numTentativas++;
-                UpdateNumTentativas();
-                bool acertou = false;
-                for(int i=0; i<tamanhoPalavraOculta; i++)
+                if(!letrasTestadas[letraTecladoComoInt-97])
                 {
-                    if(!letrasDescobertas[i])
+                    letrasTestadas[letraTecladoComoInt-97] = true;
+                    bool acertou = false;
+                    for(int i=0; i<tamanhoPalavraOculta; i++)
                     {
-                        letraTeclada = System.Char.ToUpper(letraTeclada);
-                        if (letrasOcultas[i] == letraTeclada)
+                        if(!letrasDescobertas[i])
                         {
-                            letrasDescobertas[i] = true;
-                            acertou = true;
-                            GameObject.Find("letra" + (i + 1)).GetComponent<Text>().text = letraTeclada.ToString();
-                            score = PlayerPrefs.GetInt("score");
-                            score++;
-                            PlayerPrefs.SetInt("score", score);
-                            UpdateScore();
-                            VerificaSePalavraDescoberta();
+                            letraTeclada = System.Char.ToUpper(letraTeclada);
+                            if (letrasOcultas[i] == letraTeclada)
+                            {
+                                letrasDescobertas[i] = true;
+                                acertou = true;
+                                GameObject.Find("letra" + (i + 1)).GetComponent<Text>().text = letraTeclada.ToString();
+                                score = PlayerPrefs.GetInt("score");
+                                score++;
+                                PlayerPrefs.SetInt("score", score);
+                                UpdateScore();
+                                VerificaSePalavraDescoberta();
+                            }
                         }
                     }
+                    if (acertou)//som
+                    {
+                        audioManager.PlaySound("beep");
+                    }
+                    else
+                    {
+                        audioManager.PlaySound("error-01");
+                        numTentativas++;
+                        UpdateTentativas(letraTeclada.ToString());
+                    }
                 }
-                if (acertou)//som
-                {
-                    audioManager.PlaySound("beep");
-                }
-                else
-                {
-                    audioManager.PlaySound("error-01");
-                }
+            }
+            
+            if(numTentativas > maxNumTentativas)
+            {
+                SceneManager.LoadScene("GameOver");
             }
         }
     }
 
-    void UpdateNumTentativas()
+    void UpdateTentativas(string letraTeclada)
     {
         GameObject.Find("numTentativas").GetComponent<Text>().text = numTentativas + " | " + maxNumTentativas;
+        GameObject.Find("letrasTestadas").GetComponent<Text>().text += letraTeclada + " ";
     }
 
     void UpdateScore()
