@@ -8,7 +8,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <ProjectGuid>{79F5137D-6D8F-6CC8-6D1F-8F62E6FECF62}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -54,6 +55,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Assets\GameManager.cs" />
+    <Compile Include="Assets\Audio\AudioManager.cs" />
+    <Compile Include="Assets\Audio\Sound.cs" />
+    <Compile Include="Assets\ManageButtons.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
