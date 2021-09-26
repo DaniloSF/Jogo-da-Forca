@@ -82,7 +82,7 @@ public class GameManager : MonoBehaviour
             {
                 numTentativas++;
                 UpdateNumTentativas();
-                for(int i=0; i<=tamanhoPalavraOculta; i++)
+                for(int i=0; i<tamanhoPalavraOculta; i++)
                 {
                     if(!letrasDescobertas[i])
                     {

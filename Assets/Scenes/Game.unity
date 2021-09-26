@@ -176,8 +176,9 @@ RectTransform:
   - {fileID: 816331035}
   - {fileID: 1526163429}
   - {fileID: 1521927874}
+  - {fileID: 519420032}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -338,7 +339,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8242493946601546762, guid: d57373858d493bb47acd6c861e4925f5, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -250
+      value: -1171
       objectReference: {fileID: 0}
     - target: {fileID: 8242493946601546762, guid: d57373858d493bb47acd6c861e4925f5, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -415,7 +416,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -438,12 +439,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1003, y: -578, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_Father: {fileID: 399637840}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &659483715 stripped
 GameObject:
@@ -547,7 +548,7 @@ PrefabInstance:
       objectReference: {fileID: 659483715}
     - target: {fileID: 3156728873312499311, guid: 1509b02514ff4b44ba9ce434ba3eba11, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3156728873312499311, guid: 1509b02514ff4b44ba9ce434ba3eba11, type: 3}
       propertyPath: m_LocalPosition.x
@@ -660,7 +661,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1521927873
 GameObject:
