@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject letra;
     public GameObject centro;
+    public AudioManager audioManager;
 
     private string palavraOculta = "";
     private string[] palavrasOcultas = new string[] {"carro","elefante","futebol"};
@@ -23,6 +24,8 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         centro = GameObject.Find("centroDaTela");
+        GameObject audioObject = GameObject.Find("AudioManager");
+        audioManager = audioObject.GetComponent<AudioManager>();
         InitGame();
         InitLetras();
 
@@ -85,22 +88,32 @@ public class GameManager : MonoBehaviour
             {
                 numTentativas++;
                 UpdateNumTentativas();
+                bool acertou = false;
                 for(int i=0; i<tamanhoPalavraOculta; i++)
                 {
                     if(!letrasDescobertas[i])
                     {
                         letraTeclada = System.Char.ToUpper(letraTeclada);
-                        if(letrasOcultas[i] == letraTeclada)
+                        if (letrasOcultas[i] == letraTeclada)
                         {
                             letrasDescobertas[i] = true;
-                            GameObject.Find("letra" + (i+1)).GetComponent<Text>().text = letraTeclada.ToString();
+                            acertou = true;
+                            GameObject.Find("letra" + (i + 1)).GetComponent<Text>().text = letraTeclada.ToString();
                             score = PlayerPrefs.GetInt("score");
                             score++;
-                            PlayerPrefs.SetInt("score",score);
+                            PlayerPrefs.SetInt("score", score);
                             UpdateScore();
                             VerificaSePalavraDescoberta();
                         }
                     }
+                }
+                if (acertou)//som
+                {
+                    audioManager.PlaySound("beep");
+                }
+                else
+                {
+                    audioManager.PlaySound("error-01");
                 }
             }
         }
@@ -128,6 +141,8 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetString("ultimaPalavraOculta",palavraOculta);
             SceneManager.LoadScene("Victory");
         }
+        
+        
     }
 
     string PegaPalavraDoArquivo()
