@@ -7,23 +7,8 @@ public class AudioManager : MonoBehaviour
 {
 
     public AudioSource[] sounds;
-    //Sound indexes
-    const int RIGHT_ANSWER = 0;
-    const int ERROR = 1;
 
-    // Start is called before the first frame update
-    void Awake()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public void PlaySound(string nome)
+    public void PlaySound(string nome)//Achar som na lista de efeito sonoros e tocar o audio uma vez
     {
         AudioSource audio = System.Array.Find(sounds, sound => sound.clip.name == nome);
         if (audio == null) return;

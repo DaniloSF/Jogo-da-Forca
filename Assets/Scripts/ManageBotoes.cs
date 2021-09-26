@@ -20,7 +20,7 @@ public class ManageBotoes : MonoBehaviour
     void FixedUpdate()
     {
         /// <summary>
-        /// Esperar um tempo antes de começar o jogo, e assim carrega a proxima cena
+        /// Dependendo do botão apertado carregar a proxima cena, 1 começa a forca com um delay, 2 vai para os creditos e 3 fecha o jogo.
         /// </summary>
         if (botao > 0)
         {

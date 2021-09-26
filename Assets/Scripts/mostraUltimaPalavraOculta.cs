@@ -11,9 +11,4 @@ public class mostraUltimaPalavraOculta : MonoBehaviour
         GetComponent<Text>().text = PlayerPrefs.GetString("ultimaPalavraOculta");
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
