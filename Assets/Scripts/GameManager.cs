@@ -70,7 +70,10 @@ public class GameManager : MonoBehaviour
     {
         if(Input.anyKeyDown)
         {
-            char letraTeclada = Input.inputString.ToCharArray()[0];
+            char[] inputPalavra = Input.inputString.ToCharArray();
+            if (inputPalavra == null || inputPalavra.Length == 0) return;
+            
+            char letraTeclada = inputPalavra[0];
             int letraTecladoComoInt = System.Convert.ToInt32(letraTeclada);
 
             if(numTentativas >= maxNumTentativas)
