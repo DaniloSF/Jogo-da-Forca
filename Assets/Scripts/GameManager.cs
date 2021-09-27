@@ -6,20 +6,24 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    //variaveis relacionadas ao score do jogo
     private int numTentativas;
     private int maxNumTentativas;
     int score = 0;
 
+    //variaveis da engine
     public GameObject letra;
     public GameObject centro;
     public AudioManager audioManager;
 
+    //variaveis relacionadas a palavra oculta
     private string palavraOculta = "";
     private string[] palavrasOcultas = new string[] {"carro","elefante","futebol"};
     private int tamanhoPalavraOculta;
     char[] letrasOcultas;
     bool[] letrasDescobertas;
 
+    //array para armazenar as letras testadas
     bool[] letrasTestadas;
 
     // Start is called before the first frame update
@@ -57,18 +61,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    //inicia os elementos do jogo, incluindo as variaveis relacionadas a palavra oculta e o array de letras testadas
     void InitGame()
     {
-        //palavraOculta = "elefante";
-        //int numeroAleatorio = Random.Range(0, palavrasOcultas.Length);
-        //palavraOculta = palavrasOcultas[numeroAleatorio];
-
-        palavraOculta = PegaPalavraDoArquivo();
-        tamanhoPalavraOculta = palavraOculta.Length;
-        palavraOculta = palavraOculta.ToUpper();
-        letrasOcultas = new char[tamanhoPalavraOculta];
-        letrasDescobertas = new bool[tamanhoPalavraOculta];
-        letrasOcultas = palavraOculta.ToCharArray();
+        palavraOculta = PegaPalavraDoArquivo(); 
+        tamanhoPalavraOculta = palavraOculta.Length; 
+        palavraOculta = palavraOculta.ToUpper(); 
+        letrasOcultas = new char[tamanhoPalavraOculta]; 
+        letrasOcultas = palavraOculta.ToCharArray(); 
+        letrasDescobertas = new bool[tamanhoPalavraOculta]; 
 
         letrasTestadas = new bool[26];
         for(int i=0; i<26; i++)
@@ -77,9 +78,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    //realiza o tratamento de input, verificando se uma letra foi teclada e se ele esta na palavra ou nao
     void CheckTeclado()
     {
-        if(Input.anyKeyDown)
+        if(Input.anyKeyDown) //checa se alguma tecla foi pressionada
         {
             char[] inputPalavra = Input.inputString.ToCharArray();
             if (inputPalavra == null || inputPalavra.Length == 0) return;
@@ -89,16 +91,16 @@ public class GameManager : MonoBehaviour
 
             if(letraTecladoComoInt >= 97 && letraTecladoComoInt <= 122)
             {
-                if(!letrasTestadas[letraTecladoComoInt-97])
+                if(!letrasTestadas[letraTecladoComoInt-97]) //checa se a letra ja foi testada
                 {
                     letrasTestadas[letraTecladoComoInt-97] = true;
                     bool acertou = false;
                     for(int i=0; i<tamanhoPalavraOculta; i++)
                     {
-                        if(!letrasDescobertas[i])
+                        if(!letrasDescobertas[i]) //checa se a letra ja foi descoberta
                         {
                             letraTeclada = System.Char.ToUpper(letraTeclada);
-                            if (letrasOcultas[i] == letraTeclada)
+                            if (letrasOcultas[i] == letraTeclada) //checa se a letra esta na palavra
                             {
                                 letrasDescobertas[i] = true;
                                 acertou = true;
@@ -111,11 +113,11 @@ public class GameManager : MonoBehaviour
                             }
                         }
                     }
-                    if (acertou)//som
+                    if (acertou)//se a letra foi acertada, toca um som positivo
                     {
                         audioManager.PlaySound("beep");
                     }
-                    else
+                    else //senao, toca um som negativo e aumenta o numero de tentativas
                     {
                         audioManager.PlaySound("error-01");
                         numTentativas++;
@@ -124,24 +126,27 @@ public class GameManager : MonoBehaviour
                 }
             }
             
-            if(numTentativas > maxNumTentativas)
+            if(numTentativas > maxNumTentativas) //checa se o numero de tentativas ultrapassou o maximo, resultando em game over
             {
                 SceneManager.LoadScene("GameOver");
             }
         }
     }
 
+    //atualiza o numero de tentativas e as letras testadas na tela
     void UpdateTentativas(string letraTeclada)
     {
         GameObject.Find("numTentativas").GetComponent<Text>().text = numTentativas + " | " + maxNumTentativas;
         GameObject.Find("letrasTestadas").GetComponent<Text>().text += letraTeclada + " ";
     }
 
+    //atualiza o score na tela
     void UpdateScore()
     {
         GameObject.Find("scoreUI").GetComponent<Text>().text = "Score: " + score;
     }
 
+    //checa se todas as letras foram descobertas
     void VerificaSePalavraDescoberta()
     {
         bool condicao = true;
@@ -149,7 +154,7 @@ public class GameManager : MonoBehaviour
         {
             condicao = condicao && letrasDescobertas[i];
         }
-        if(condicao)
+        if(condicao) //se todas as letras foram descobertas, vai para a tela de vitoria
         {
             PlayerPrefs.SetString("ultimaPalavraOculta",palavraOculta);
             SceneManager.LoadScene("Victory");
@@ -158,6 +163,7 @@ public class GameManager : MonoBehaviour
         
     }
 
+    //escolhe uma palavra aleatoria do arquivo de palavras
     string PegaPalavraDoArquivo()
     {
         TextAsset t1 = (TextAsset)Resources.Load("palavrasOcultas",typeof(TextAsset));
