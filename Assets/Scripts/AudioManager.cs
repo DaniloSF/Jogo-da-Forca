@@ -10,7 +10,7 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySound(string nome)//Achar som na lista de efeito sonoros e tocar o audio uma vez
     {
-        AudioSource audio = System.Array.Find(sounds, sound => sound.clip.name == nome);
+        AudioSource audio = System.Array.Find(sounds, sound => sound.clip.name == nome); //Funcao Lambda que retorna o object no array com o mesmo nome
         if (audio == null) return;
         audio.PlayOneShot(audio.clip);
     }

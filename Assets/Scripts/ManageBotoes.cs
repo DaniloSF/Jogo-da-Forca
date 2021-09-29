@@ -17,32 +17,34 @@ public class ManageBotoes : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void FixedUpdate()//Chamado uma vez por frame para que o timer seja cosntante nao importa a maquina do jogador
     {
         /// <summary>
-        /// Dependendo do botão apertado carregar a proxima cena, 1 começa a forca com um delay, 2 vai para os creditos e 3 fecha o jogo.
+        /// Dependendo do botao apertado carregar a proxima cena, 1 comeca a forca com um delay, 2 vai para os creditos e 3 fecha o jogo.
         /// </summary>
         if (botao > 0)
         {
             switch (botao)
             {
-                case 1:
+                case 1://StartGame, delay definido por "changeDelay" frames de tempo
                     changeDelay--;
                     if (changeDelay <= 0)
                     {
                         SceneManager.LoadScene("Game");
                     }
                     break;
-                case 2:
+                case 2://Creditos
                     changeDelay--;
                     if (changeDelay <= 0)
                     {
                         SceneManager.LoadScene("Creditos");
                     }
                     break;
-                case 3:
+                case 3: //Fechar execultavel
                     Application.Quit();
-                    botao = 0;
+
+                    //reseta o flag do botao para que nao repita o mesma coisa varios frames
+                    botao = 0; 
                     Debug.Log("Game is exiting");
                     break;
             }
@@ -51,18 +53,18 @@ public class ManageBotoes : MonoBehaviour
 
     }
 
-    public void StartGame()
+    public void StartGame()//Acionar acao do botao para comecar o jogo
     {
         botao = 1;
     }
 
-    public void MostrarCreditos()
+    public void MostrarCreditos()//Acionar acao do botao para mostrar os creditos
     {
         botao = 2;
         changeDelay = 15;
     }
     
-    public void FecharJogo()
+    public void FecharJogo()//Fechar o executavel do jogo, apos buildar
     {
         botao = 3;
         changeDelay = 15;
